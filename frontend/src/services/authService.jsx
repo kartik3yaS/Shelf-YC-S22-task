@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = "https://shelf-yc-s22-task-production.up.railway.app/api/auth";
 
 const register = async (userData) => {
   const response = await axios.post(`${API_URL}/register`, userData);

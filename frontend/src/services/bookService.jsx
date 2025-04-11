@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/books";
+const API_URL = "https://shelf-yc-s22-task-production.up.railway.app/api/books";
 
 // Configure axios to include token in requests
 axios.interceptors.request.use(

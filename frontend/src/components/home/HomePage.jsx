@@ -24,7 +24,7 @@ const HomePage = () => {
         </div>
         <div className="hero-image">
           <img
-            src="http://localhost:5000/images/book-sharing.svg"
+            src="https://shelf-yc-s22-task-production.up.railway.app/images/book-sharing.svg"
             alt="Book sharing illustration"
           />
         </div>

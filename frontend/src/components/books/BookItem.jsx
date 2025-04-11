@@ -19,7 +19,7 @@ const BookItem = ({ book, onUpdate }) => {
 
   // Default image if no cover image is available
   const defaultCoverImage =
-    "http://localhost:5000/images/default-book-cover.png";
+    "https://shelf-yc-s22-task-production.up.railway.app/images/default-book-cover.png";
 
   const handleStatusChange = async (newStatus) => {
     setLoading(true);

@@ -21,7 +21,7 @@ exports.createBook = async (req, res) => {
     // Handle file upload
     let coverImageUrl = undefined;
     if (req.file) {
-      coverImageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+      coverImageUrl = `https://shelf-yc-s22-task-production.up.railway.app/uploads/${req.file.filename}`;
     }
 
     // Create new book
