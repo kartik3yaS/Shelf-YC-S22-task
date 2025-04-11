@@ -1,0 +1,7 @@
+server/node_modules/
+frontend/node_modules/
+
+# Ignore envs
+.env
+server/.env
+frontend/.env
