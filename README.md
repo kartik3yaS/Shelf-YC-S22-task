@@ -48,6 +48,12 @@ A full-stack web application that enables users to exchange books with others in
 - JWT Authentication
 - Multer (for file uploads)
 
+### AI Dev tools used
+
+- Cursor ai
+- Cluade 3.7 Sonnet Thinking
+- Little bit of GPT-4o
+
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
@@ -102,4 +108,3 @@ npm run dev
 cd ../frontend
 npm run dev
 ```
-
