@@ -62,7 +62,7 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 https://github.com/kartik3yaS/Shelf-YC-S22-task.git
-cd book-exchange-platform
+cd Shelf-YC-S22-task
 ```
 
 2. **Install dependencies**
@@ -87,8 +87,11 @@ npm install
    JWT_SECRET=your_jwt_secret_key_should_be_long_and_complex
    JWT_EXPIRE=24h
    ```
+   **Note:**
+   
+      The provided `MONGODB_URI` is a secured, limited-access connection string with read and write permissions only to the `shelf` database. This allows you to run the           application locally using the shared database for development and testing purposes — no admin privileges or access to other databases is granted.
 
-4. **Start the application**
+5. **Start the application**
 
 ```bash
 # Start backend server
