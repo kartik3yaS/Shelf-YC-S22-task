@@ -38,7 +38,7 @@ const Footer = () => {
           <div className="footer-section">
             <h3>Contact Us</h3>
             <p>Email: info@bookexchange.com</p>
-            <p>Phone: (123) 456-7890</p>
+            <p>Phone: +91 9005998999</p>
             <div className="social-icons">
               <a href="#" className="social-icon">
                 <i className="fab fa-facebook-f"></i>
