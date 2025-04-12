@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import BookForm from "../books/BookForm";
 import BookList from "../books/BookList";
 import BookItem from "../books/BookItem";
+import BorrowRequestsList from "../borrowRequests/BorrowRequestsList";
 import bookService from "../../services/bookService";
 import "./Dashboard.css";
 
@@ -55,6 +56,14 @@ const OwnerDashboard = () => {
           Add New Book
         </button>
         <button
+          className={`tab-btn ${
+            activeTab === "borrowRequests" ? "active" : ""
+          }`}
+          onClick={() => setActiveTab("borrowRequests")}
+        >
+          Borrow Requests
+        </button>
+        <button
           className={`tab-btn ${activeTab === "browse" ? "active" : ""}`}
           onClick={() => setActiveTab("browse")}
         >
@@ -100,6 +109,13 @@ const OwnerDashboard = () => {
                 setActiveTab("myBooks");
               }}
             />
+          </div>
+        )}
+
+        {activeTab === "borrowRequests" && (
+          <div className="borrow-requests-section">
+            <h2>Borrow Requests</h2>
+            <BorrowRequestsList onStatusChange={fetchMyBooks} />
           </div>
         )}
 

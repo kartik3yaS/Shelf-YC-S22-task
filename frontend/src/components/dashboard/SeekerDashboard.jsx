@@ -1,28 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import BookList from "../books/BookList";
+import SeekerRequestsList from "../borrowRequests/SeekerRequestsList";
 import "./Dashboard.css";
 
 const SeekerDashboard = () => {
+  const [activeTab, setActiveTab] = useState("discover");
   const user = JSON.parse(localStorage.getItem("user"));
 
   return (
-    <div className="dashboard-container">
+    <div className="seeker-dashboard">
       <div className="dashboard-header">
-        <h1>Book Seeker Dashboard</h1>
-        <p>
-          Welcome back, <span className="user-name">{user.name}</span>!
-        </p>
+        <h2>Book Seeker Dashboard</h2>
+        <p>Welcome back, {user?.name}!</p>
+      </div>
+
+      <div className="dashboard-tabs">
+        <button
+          className={`tab-button ${activeTab === "discover" ? "active" : ""}`}
+          onClick={() => setActiveTab("discover")}
+        >
+          Discover Books
+        </button>
+        <button
+          className={`tab-button ${activeTab === "myRequests" ? "active" : ""}`}
+          onClick={() => setActiveTab("myRequests")}
+        >
+          My Requests
+        </button>
       </div>
 
       <div className="dashboard-content">
-        <div className="browse-books-section">
-          <h2>Find Your Next Book</h2>
-          <p className="section-desc">
-            Browse through the available books for rent or exchange in your
-            area. Use the filters to narrow down your search.
-          </p>
-          <BookList />
-        </div>
+        {activeTab === "discover" && (
+          <div className="discover-section">
+            <BookList />
+          </div>
+        )}
+
+        {activeTab === "myRequests" && (
+          <div className="my-requests-section">
+            <SeekerRequestsList />
+          </div>
+        )}
       </div>
     </div>
   );

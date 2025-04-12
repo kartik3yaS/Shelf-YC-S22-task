@@ -7,6 +7,7 @@ require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const bookRoutes = require("./routes/books");
 const userRoutes = require("./routes/users");
+const borrowRequestRoutes = require("./routes/borrowRequests");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/borrow-requests", borrowRequestRoutes);
 
 app.get("/", (req, res) => {
   res.send("Book Exchange API is running");

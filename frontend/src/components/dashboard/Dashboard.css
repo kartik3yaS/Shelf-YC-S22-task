@@ -9,6 +9,7 @@
 .dashboard-header h1 {
   color: var(--primary-color);
   margin-bottom: 10px;
+  font-size: 32px;
 }
 
 .user-name {
@@ -16,42 +17,53 @@
   color: var(--primary-color);
 }
 
+/* Fixed Tab Button Styling */
 .dashboard-tabs {
   display: flex;
-  border-bottom: 1px solid #ddd;
   margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  gap: 12px; /* Add space between buttons */
   overflow-x: auto;
 }
 
 .tab-btn {
-  background: none;
-  border: none;
-  padding: 12px 20px;
-  font-size: 16px;
+  padding: 10px 18px;
+  background-color: #f5f7fa;
+  border: 1px solid #ddd !important;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #555;
   cursor: pointer;
-  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
   white-space: nowrap;
-  transition: var(--transition);
-  color: var(--light-text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .tab-btn:hover {
+  background-color: #eef2f7;
   color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.08);
 }
 
 .tab-btn.active {
-  color: var(--primary-color);
-  border-bottom-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color) !important;
   font-weight: 600;
 }
 
+/* Dashboard Content Styles */
 .dashboard-content {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .dashboard-content h2 {
   color: var(--primary-color);
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
 .section-desc {
@@ -59,6 +71,7 @@
   margin-bottom: 25px;
 }
 
+/* Book Item Styles */
 .no-books {
   background: white;
   border-radius: var(--border-radius);
@@ -98,13 +111,83 @@
   font-weight: 600;
 }
 
+/* Borrow Request Sections */
+.borrow-requests-section {
+  margin-top: 20px;
+}
+
+.borrow-requests-section h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.my-requests-section {
+  margin-top: 20px;
+}
+
+.my-requests-section h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+/* Modal for Completion */
+.complete-options {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.complete-options button {
+  padding: 12px 15px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.btn-cancel {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #e0e0e0;
+}
+
+/* Responsive Styles */
 @media screen and (max-width: 768px) {
   .dashboard-tabs {
     padding-bottom: 10px;
+    flex-wrap: wrap;
   }
 
   .tab-btn {
-    padding: 10px 15px;
+    padding: 8px 14px;
     font-size: 14px;
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .dashboard-header h1 {
+    font-size: 26px;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .tab-btn {
+    border: 2px solid #000;
+  }
+
+  .tab-btn.active {
+    border: 2px solid #fff;
+    outline: 2px solid #000;
   }
 }

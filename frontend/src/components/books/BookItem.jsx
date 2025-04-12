@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import bookService from "../../services/bookService";
+import borrowRequestService from "../../services/borrowRequestService";
 import "./Books.css";
 
 const BookItem = ({ book, onUpdate }) => {
@@ -13,13 +15,48 @@ const BookItem = ({ book, onUpdate }) => {
     location: book.location,
     contactInfo: book.contactInfo,
   });
+  const [requestStatus, setRequestStatus] = useState(null);
+  const [showRequestModal, setShowRequestModal] = useState(false);
+  const [requestMessage, setRequestMessage] = useState("");
+  const [requestSending, setRequestSending] = useState(false);
+  const [requestError, setRequestError] = useState("");
 
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-  const isOwner = user && user._id === book.ownerId;
+
+  // Check if user is owner of this specific book
+  const isBookOwner = user && user._id === book.ownerId;
+
+  // Check if user has owner role (regardless of book ownership)
+  const hasOwnerRole = user && user.role === "owner";
 
   // Default image if no cover image is available
   const defaultCoverImage =
     "https://shelf-yc-s22-task-production.up.railway.app/images/default-book-cover.png";
+
+  // Check for existing request when component mounts
+  useEffect(() => {
+    const checkExistingRequest = async () => {
+      if (!user || isBookOwner || hasOwnerRole) return;
+
+      try {
+        const requests = await borrowRequestService.getSeekerRequests();
+        const existingRequest = requests.find(
+          (req) =>
+            req.bookId._id === book._id &&
+            ["pending", "accepted"].includes(req.status)
+        );
+
+        if (existingRequest) {
+          setRequestStatus(existingRequest.status);
+        }
+      } catch (error) {
+        console.error("Failed to check existing requests:", error);
+      }
+    };
+
+    checkExistingRequest();
+  }, [book._id, isBookOwner, hasOwnerRole, user]);
 
   const handleStatusChange = async (newStatus) => {
     setLoading(true);
@@ -62,6 +99,31 @@ const BookItem = ({ book, onUpdate }) => {
       if (onUpdate) onUpdate();
     } catch (err) {
       console.error("Failed to update book:", err);
+    }
+  };
+
+  const handleBorrowRequest = async () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    setRequestSending(true);
+    setRequestError("");
+
+    try {
+      await borrowRequestService.createRequest(book._id, requestMessage);
+      setRequestStatus("pending");
+      setShowRequestModal(false);
+      setRequestMessage("");
+    } catch (err) {
+      console.error("Failed to send borrow request:", err);
+      setRequestError(
+        err.response?.data?.message ||
+          "Failed to send request. Please try again."
+      );
+    } finally {
+      setRequestSending(false);
     }
   };
 
@@ -166,12 +228,15 @@ const BookItem = ({ book, onUpdate }) => {
             <p>
               <span>Location:</span> {book.location}
             </p>
-            <p>
-              <span>Contact:</span> {book.contactInfo}
-            </p>
+            {/* Only show contact info to the owner */}
+            {isBookOwner && (
+              <p>
+                <span>Contact:</span> {book.contactInfo}
+              </p>
+            )}
           </div>
 
-          {isOwner && (
+          {isBookOwner ? (
             <div className="book-actions">
               <button
                 onClick={() => setIsEditing(true)}
@@ -197,8 +262,76 @@ const BookItem = ({ book, onUpdate }) => {
                 Delete
               </button>
             </div>
+          ) : (
+            // Only show borrow options if user is NOT an owner (role check)
+            !hasOwnerRole && (
+              <div className="book-actions">
+                {requestStatus === "pending" ? (
+                  <button className="btn btn-secondary btn-sm" disabled>
+                    Request Pending
+                  </button>
+                ) : requestStatus === "accepted" ? (
+                  <button
+                    onClick={() => navigate("/my-requests")}
+                    className="btn btn-success btn-sm"
+                  >
+                    View Contact Info
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setShowRequestModal(true)}
+                    className="btn btn-primary btn-sm"
+                    disabled={book.status !== "available"}
+                  >
+                    {book.status === "available" ? "Borrow" : "Not Available"}
+                  </button>
+                )}
+              </div>
+            )
           )}
         </>
+      )}
+
+      {/* Borrow Request Modal */}
+      {showRequestModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Request to Borrow</h3>
+            <p>
+              You are requesting to borrow "{book.title}" by {book.author}
+            </p>
+
+            {requestError && (
+              <div className="error-message">{requestError}</div>
+            )}
+
+            <div className="form-group">
+              <label>Message for the owner (optional):</label>
+              <textarea
+                value={requestMessage}
+                onChange={(e) => setRequestMessage(e.target.value)}
+                placeholder="Introduce yourself and explain why you'd like to borrow this book..."
+                rows="4"
+              />
+            </div>
+
+            <div className="modal-actions">
+              <button
+                onClick={() => setShowRequestModal(false)}
+                className="btn btn-secondary"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleBorrowRequest}
+                className="btn btn-primary"
+                disabled={requestSending}
+              >
+                {requestSending ? "Sending..." : "Send Request"}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

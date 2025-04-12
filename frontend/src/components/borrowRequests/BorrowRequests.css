@@ -1,0 +1,259 @@
+.borrow-requests-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.borrow-requests-container h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.requests-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.request-card {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.request-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.request-card.status-pending {
+  border-left: 4px solid #ffc107;
+}
+
+.request-card.status-accepted {
+  border-left: 4px solid #28a745;
+}
+
+.request-card.status-rejected {
+  border-left: 4px solid #dc3545;
+  opacity: 0.8;
+}
+
+.request-card.status-completed {
+  border-left: 4px solid #17a2b8;
+  opacity: 0.8;
+}
+
+.request-header {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.request-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background-color: #ffeeba;
+  color: #856404;
+}
+
+.status-badge.accepted {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.completed {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.request-details {
+  padding: 15px;
+  flex-grow: 1;
+}
+
+.request-details p {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.request-details span {
+  font-weight: 600;
+  color: var(--light-text);
+}
+
+.request-message {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #eee;
+}
+
+.message-content {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.request-actions {
+  padding: 15px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.request-pending,
+.request-rejected,
+.request-completed {
+  color: var(--light-text);
+  font-style: italic;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.no-requests {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 30px;
+  text-align: center;
+  box-shadow: var(--box-shadow);
+}
+
+.no-requests p {
+  color: var(--light-text);
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  padding: 25px;
+  position: relative;
+}
+
+.modal-content h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.contact-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.book-info,
+.user-info {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: var(--border-radius);
+}
+
+.book-info h4,
+.user-info h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+.contact-note {
+  margin: 20px 0;
+  padding: 10px;
+  background: #d4edda;
+  border-radius: var(--border-radius);
+  color: #155724;
+  font-size: 0.9rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .requests-list {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-details {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+.complete-options {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.complete-options button {
+  padding: 12px 15px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.btn-cancel {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #e0e0e0;
+}
