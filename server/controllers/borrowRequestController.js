@@ -206,11 +206,10 @@ exports.getContactInformation = async (req, res) => {
   }
 };
 
-// Mark a request as completed (book returned)
 exports.completeRequest = async (req, res) => {
   try {
     const { requestId } = req.params;
-    const { bookStatus } = req.body; // Get the final book status from request
+    const { bookStatus } = req.body; // Get book status from request body
     const ownerId = req.user.id;
 
     // Find the request
