@@ -24,6 +24,11 @@ const createRequest = async (bookId, message) => {
   return response.data;
 };
 
+const getNewRequestsCount = async () => {
+  const response = await axios.get(`${API_URL}/borrow-requests/new-count`);
+  return response.data.count;
+};
+
 const getOwnerRequests = async () => {
   const response = await axios.get(`${API_URL}/borrow-requests/owner`);
   return response.data;
@@ -49,6 +54,11 @@ const getContactInformation = async (requestId) => {
   return response.data;
 };
 
+const markRequestsAsViewed = async () => {
+  const response = await axios.patch(`${API_URL}/borrow-requests/mark-viewed`);
+  return response.data;
+};
+
 // Updated to include bookStatus parameter
 const completeRequest = async (requestId, bookStatus) => {
   const response = await axios.patch(
@@ -63,6 +73,8 @@ export default {
   getOwnerRequests,
   getSeekerRequests,
   updateRequestStatus,
+  getNewRequestsCount,
+  markRequestsAsViewed,
   getContactInformation,
   completeRequest,
 };

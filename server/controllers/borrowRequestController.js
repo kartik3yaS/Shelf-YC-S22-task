@@ -206,6 +206,42 @@ exports.getContactInformation = async (req, res) => {
   }
 };
 
+// Get count of new/unread requests
+exports.getNewRequestsCount = async (req, res) => {
+  try {
+    const ownerId = req.user.id;
+
+    // Count requests that are pending and haven't been viewed yet
+    const count = await BorrowRequest.countDocuments({
+      ownerId,
+      status: "pending",
+      isViewed: false, // You'll need to add this field to your model
+    });
+
+    res.json({ count });
+  } catch (error) {
+    console.error("Error counting new requests:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.markRequestsAsViewed = async (req, res) => {
+  try {
+    const ownerId = req.user.id;
+
+    // Update all pending requests to be viewed
+    await BorrowRequest.updateMany(
+      { ownerId, status: "pending", isViewed: false },
+      { $set: { isViewed: true } }
+    );
+
+    res.json({ message: "Requests marked as viewed" });
+  } catch (error) {
+    console.error("Error marking requests as viewed:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 exports.completeRequest = async (req, res) => {
   try {
     const { requestId } = req.params;

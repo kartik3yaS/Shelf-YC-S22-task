@@ -34,6 +34,10 @@ const borrowRequestSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    isViewed: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

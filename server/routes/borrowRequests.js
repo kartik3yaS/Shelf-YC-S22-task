@@ -12,6 +12,14 @@ router.get("/owner", auth, borrowRequestController.getOwnerRequests);
 // Get requests made by a seeker
 router.get("/seeker", auth, borrowRequestController.getSeekerRequests);
 
+router.get("/new-count", auth, borrowRequestController.getNewRequestsCount);
+
+router.patch(
+  "/mark-viewed",
+  auth,
+  borrowRequestController.markRequestsAsViewed
+);
+
 // Update request status (accept/reject)
 router.patch(
   "/:requestId/status",
